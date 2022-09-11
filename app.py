@@ -5,7 +5,7 @@ import pydeck as pdk
 import numpy as np
 import pandas as pd 
 
-#import seaborn as sns #seaborn til plots
+import seaborn as sns #seaborn til plots
 from matplotlib import pyplot as plt #plot control
 
 
