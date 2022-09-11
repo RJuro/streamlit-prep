@@ -5,6 +5,11 @@ import pydeck as pdk
 import numpy as np
 import pandas as pd 
 
+import altair as alt
+
+alt.renderers.set_embed_options(theme='dark')
+
+
 #import seaborn as sns #seaborn til plots
 #from matplotlib import pyplot as plt #plot control
 
@@ -89,3 +94,21 @@ tooltip={"text": "{name}\n{room_type}\n{price}"}
 )
 
 st.pydeck_chart(r)
+
+st.markdown('---')
+
+if len(data) > 5000:
+    data_alt = data.sample(5000)
+
+if len(data) <= 5000:
+    data_alt = data
+
+price_chart = alt.Chart(data_alt).mark_bar().encode(
+    x='mean(price):Q',
+    y='room_type:O',
+    color='room_type:N',
+    row='neighbourhood:N',
+    tooltip=["neighbourhood:N", "mean(price):Q"]
+).interactive()
+
+st.altair_chart(price_chart, use_container_width=False)
