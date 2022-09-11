@@ -5,12 +5,12 @@ import pydeck as pdk
 import numpy as np
 import pandas as pd 
 
-import seaborn as sns #seaborn til plots
-from matplotlib import pyplot as plt #plot control
+#import seaborn as sns #seaborn til plots
+#from matplotlib import pyplot as plt #plot control
 
 
-from jupyterthemes import jtplot
-jtplot.style(theme='monokai', context='notebook', ticks=True, grid=False)
+#from jupyterthemes import jtplot
+#jtplot.style(theme='monokai', context='notebook', ticks=True, grid=False)
 
 
 st.set_page_config(page_title='Streamlit - Dashboard 🤯',
@@ -78,14 +78,14 @@ layer = pdk.Layer(
         get_line_color=[0, 0, 0],
     )
 
-    # Set the viewport location
-    view_state = pdk.ViewState(latitude=data['latitude'].mean(), longitude=data['longitude'].mean(), zoom=12, pitch=50)
+# Set the viewport location
+view_state = pdk.ViewState(latitude=data['latitude'].mean(), longitude=data['longitude'].mean(), zoom=12, pitch=50)
 
-    # Renders
-    r = pdk.Deck(layers=[layer], 
-    initial_view_state=view_state,
-    #map_style='mapbox://styles/mapbox/light-v9',
-    tooltip={"text": "{name}\n{room_type}\n{price}"}
-    )
+# Renders
+r = pdk.Deck(layers=[layer], 
+initial_view_state=view_state,
+#map_style='mapbox://styles/mapbox/light-v9',
+tooltip={"text": "{name}\n{room_type}\n{price}"}
+)
 
-    st.pydeck_chart(r)
+st.pydeck_chart(r)
