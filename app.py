@@ -57,7 +57,6 @@ price_selected = st.slider("Select price range", min_value = int(data.price.min(
 data = data[(data.price > price_selected[0]) & (data.price < price_selected[1])]
 
 
-st.markdown('---')
 
 #filter for neighborhoods
 
@@ -93,9 +92,9 @@ initial_view_state=view_state,
 tooltip={"text": "{name}\n{room_type}\n{price}"}
 )
 
-st.pydeck_chart(r)
+#st.pydeck_chart(r)
 
-st.markdown('---')
+
 
 if len(data) > 5000:
     data_alt = data.sample(5000)
@@ -103,12 +102,19 @@ if len(data) > 5000:
 if len(data) <= 5000:
     data_alt = data
 
-price_chart = alt.Chart(data_alt).mark_bar().encode(
+price_chart = alt.Chart(data).mark_bar().encode(
     x='mean(price):Q',
-    y='room_type:O',
-    color='room_type:N',
+    y=alt.Y('room_type:O',axis=alt.Axis(labels=False), title=" "),
+    color=alt.Color('room_type:N', scale=alt.Scale(scheme='lightorange')),
     row='neighbourhood:N',
     tooltip=["neighbourhood:N", "mean(price):Q"]
-).interactive()
+).configure_view(strokeWidth=0).interactive()
 
-st.altair_chart(price_chart, use_container_width=False)
+#st.altair_chart(price_chart, use_container_width=False)
+
+row1_1, row1_2 = st.columns((3, 2))
+with row1_1:
+    st.pydeck_chart(r)
+
+with row1_2:
+    st.altair_chart(price_chart, use_container_width=False)
